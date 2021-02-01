@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Report</title>
+</head>
+<body>
+<p th:text="${user.getUsername()}"></p>
+<a href="/logout">Logout</a>
+    <h1>Bug Report</h1>
+
+    <form action="#" th:action="@{/create-post/save}" th:object="${post}" method="post"
+          enctype="multipart/form-data">
+        <div >
+            <label for="title" >Title</label>
+            <input type="text" placeholder="Title" th:field="*{title}" th:value="*{title}"/>
+            <input type="hidden" placeholder="Title" th:field="*{id}">
+        </div>
+        <div >
+            <label for="text_content" >Content</label>
+            <textarea type="text" th:field="*{content}" th:text="*{content}"></textarea>
+        </div>
+        <button type="submit" >Save</button>
+    </form>
+</body>
+</html>

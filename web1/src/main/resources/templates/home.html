@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<a href="/logout">Logout</a>
+<p th:text="${user.getUsername()}"></p>
+<p th:text="${user.getRoles()}"></p>
+<a href="/create-post">Create Post</a>
+<table style="width:100%">
+    <tr >
+        <th >Author Name</th>
+        <th >Title</th>
+        <th >Content</th>
+        <th >Last Update</th>
+        <th >Delete</th>
+    </tr>
+    <tr th:each="post : ${posts}">
+        <td th:text="${post.getAuthor().getUsername()}"></td>
+        <td ><a th:href="@{/page/{id}(id = ${post.id})}" th:text="${post.getTitle()}"></a></td>
+        <td th:text="${post.getContent()}"></td>
+        <td th:text="${#temporals.format(post.lastUpdate, 'dd-MM-yyyy HH:mm')}"></td>
+        <td sec:authorize="hasAuthority('CUSTOMER')"><a th:href="@{/delete-post(id = ${post.id})}">Delete</a></td>
+    </tr>
+</table>
+
+</body>
+</html>

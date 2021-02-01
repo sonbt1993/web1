@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+</head>
+<body>
+<a href="/logout">Logout</a>
+<p th:text="${user.getUsername()}"></p>
+<p th:text="${user.getRoles()}"></p>
+
+<table style="width:100%">
+    <tr >
+        <th >Author Name</th>
+        <th >Title</th>
+        <th >Content</th>
+        <th >Last Update</th>
+        <th></th>
+    </tr>
+    <tr th:object="${post}">
+        <td th:text="*{author.getUsername()}"></td>
+        <td th:text="*{title}"></td>
+        <td th:text="*{content}"></td>
+        <td th:text="*{#temporals.format(lastUpdate, 'dd-MM-yyyy HH:mm')}"></td>
+        <td sec:authorize="hasAuthority('CUSTOMER')"><a th:href="@{/delete-post(id = ${post.id})}">Delete</a></td>
+    </tr>
+</table>
+
+</body>
+</html>
